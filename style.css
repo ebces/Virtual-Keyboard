@@ -1,0 +1,54 @@
+body {
+    margin: 0;
+}
+
+.keyboard {
+    height: 280px;
+    color: #ffffff;
+    background: #004134;
+    position: fixed;
+    top: 100%;
+    transform: translateY(-100%);
+    transition: .5s;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.keyboard__line {
+    display: flex;
+}
+
+.keyboard__symbol {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 7.5vw;
+    max-width: 100px;
+    height: 50px;
+    border-radius: 5px;
+    background: #008167;
+    margin: 2px;
+}
+
+.keyboard__symbol--backspace,
+.keyboard__symbol--capslock,
+.keyboard__symbol--enter,
+.keyboard__symbol--done {
+    width: 10vw;
+    max-width: 150px;
+}
+
+.keyboard__symbol--space {
+    width: 40vw;
+    max-width: 700px;
+}
+
+.text {
+    display: block;
+    margin: 0 auto;
+    width: 90%;
+    height: 30vh;
+}
