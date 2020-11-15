@@ -12,6 +12,7 @@ const regExp = /^[0-9a-zA-Z.,?]$/;
 let isCapsLockActive = false;
 
 keyboard.addEventListener('mousedown', (e) => {
+  e.preventDefault();
   const activeInput = document.activeElement;
   const isOneSymbolClicked = e.target.textContent.length === 1;
   const isSymbol = regExp.test(e.target.textContent);
@@ -58,14 +59,12 @@ keyboard.addEventListener('mousedown', (e) => {
       break;
     default:
   }
-
-  e.preventDefault();
 });
 
 window.addEventListener('keydown', (e) => {
   e.preventDefault();
   const activeInput = document.activeElement;
-  const button = document.querySelector(`div[data-key='${e.keyCode}']`);
+  const button = document.querySelector(`div[data-key='${e.key.toLowerCase()}']`);
   if (button) {
     button.classList.add('keyboard__symbol--clicked');
   }
