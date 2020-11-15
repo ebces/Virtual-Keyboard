@@ -14,38 +14,27 @@ let isCapsLockActive = false;
 keyboard.addEventListener('mousedown', (e) => {
   e.preventDefault();
   const activeInput = document.activeElement;
-  const isOneSymbolClicked = e.target.textContent.length === 1;
+  const isButtonClicked = e.target.textContent.length === 1;
   const isSymbol = regExp.test(e.target.textContent);
 
-  if (isOneSymbolClicked) {
-    e.target.classList.add('keyboard__symbol--clicked');
-  }
-  if (isOneSymbolClicked && isSymbol) {
+  if (!isButtonClicked) return;
+  e.target.classList.add('keyboard__symbol--clicked');
+  if (isSymbol) {
     activeInput.value += e.target.textContent;
   }
 
   switch (e.target) {
     case backspace:
-      if (textArea.value.length > 0) {
-        const str = textArea.value.split('');
-        str.length -= 1;
-        textArea.value = str.join('');
-      }
+      if (!textArea.value.length) return;
+      textArea.value = textArea.value.slice(0, -1);
       break;
     case capsLock:
-      if (isCapsLockActive) {
-        for (let i = 0; i < letters.length; i += 1) {
-          letters[i].textContent = letters[i].textContent.toLowerCase();
-        }
-        capsLock.style.color = '#ffffff';
-        isCapsLockActive = false;
-      } else {
-        for (let i = 0; i < letters.length; i += 1) {
-          letters[i].textContent = letters[i].textContent.toUpperCase();
-        }
-        capsLock.style.color = '#0e03aa';
-        isCapsLockActive = true;
+      capsLock.style.color = isCapsLockActive ? '#ffffff' : '#0e03aa';
+      for (let i = 0; i < letters.length; i += 1) {
+        letters[i].textContent = isCapsLockActive ? letters[i].textContent.toLowerCase()
+          : letters[i].textContent.toUpperCase();
       }
+      isCapsLockActive = !isCapsLockActive;
       break;
     case enter:
       textArea.value += '\n';
@@ -63,18 +52,19 @@ keyboard.addEventListener('mousedown', (e) => {
 
 window.addEventListener('keydown', (e) => {
   e.preventDefault();
+  const { keyCode } = e;
   const activeInput = document.activeElement;
   const button = document.querySelector(`div[data-key='${e.key.toLowerCase()}']`);
   if (button) {
     button.classList.add('keyboard__symbol--clicked');
   }
-  if (e.keyCode === 32) {
+  if (keyCode === 32) {
     activeInput.value += ' ';
   }
-  if (e.keyCode === 13) {
+  if (keyCode === 13) {
     activeInput.value += '\n';
   }
-  if (e.keyCode === 8) {
+  if (keyCode === 8) {
     if (activeInput.value.length > 0) {
       const str = activeInput.value.split('');
       str.length -= 1;
